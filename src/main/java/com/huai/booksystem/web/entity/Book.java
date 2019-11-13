@@ -6,17 +6,17 @@ import com.huai.booksystem.unit.DatetimeUnit;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 用户
- * @Author: laiyunjing
- * @Date: 2019/11/13 0013 16:58
- * @Version 1.0
+ * @Created by laiyunjing
+ * @Date 2019/11/13 22:30
+ * @Version
  */
 @Entity
-@Table(name="T_USER")
-public class User {
+@Table(name="T_BOOK")
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,23 +26,33 @@ public class User {
     @Column(length = 30)
     private String name;
 
+    @Column(precision = 10,scale = 2 )
+    private BigDecimal danjia;
+
+    @NotEmpty(message = "作者不为空")
+    @Column(length = 30)
+    private String author;
+
+    @NotEmpty(message = "出版社不为空")
+    @Column(length = 30)
+    private String cbs;
+
+    @NotNull(message = "数量不为空")
+    @Column(length = 10)
+    private Integer num;
+
+    @Column(length = 200)
+    private String imagerUrl;
+
     @ManyToOne
-    @JoinColumn(name = "roleId")
-    private Role role;
+    @JoinColumn(name = "booktypeId")
+    private BookType bookType;
 
-    @Column(length = 200)
-    private String pwd;
-
-    @NotEmpty(message = "用户名不为空")
-    @Column(length = 200)
-    private String turename;
-
-    @Column(length = 200)
-    private String remark;
 
     @NotNull(message = "排序号不为空")
     @Column(length = 10)
     private Integer orderNo;
+
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date creatDateTime;
@@ -66,36 +76,52 @@ public class User {
         this.name = name;
     }
 
-    public Role getRole() {
-        return role;
+    public BigDecimal getDanjia() {
+        return danjia;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setDanjia(BigDecimal danjia) {
+        this.danjia = danjia;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public String getTurename() {
-        return turename;
+    public String getCbs() {
+        return cbs;
     }
 
-    public void setTurename(String turename) {
-        this.turename = turename;
+    public void setCbs(String cbs) {
+        this.cbs = cbs;
     }
 
-    public String getRemark() {
-        return remark;
+    public Integer getNum() {
+        return num;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public String getImagerUrl() {
+        return imagerUrl;
+    }
+
+    public void setImagerUrl(String imagerUrl) {
+        this.imagerUrl = imagerUrl;
+    }
+
+    public BookType getBookType() {
+        return bookType;
+    }
+
+    public void setBookType(BookType bookType) {
+        this.bookType = bookType;
     }
 
     public Integer getOrderNo() {
@@ -123,4 +149,6 @@ public class User {
     public void setUpdateDateTime(Date updateDateTime) {
         this.updateDateTime = updateDateTime;
     }
+
+
 }

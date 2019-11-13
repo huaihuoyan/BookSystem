@@ -9,16 +9,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 日期的数据格式的处理
- * @Author: laiyunjing
- * @Date: 2019/11/13 0013 17:23
- * @Version 1.0
+ * 详细时间
+ * @Created by laiyunjing
+ * @Date 2019/11/13 21:38
+ * @Version
  */
-public class DateUnit extends JsonSerializer<Date> {
-
+public class DatetimeUnit extends JsonSerializer<Date> {
     @Override
     public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         jsonGenerator.writeString(sdf.format(date));
     }
 }

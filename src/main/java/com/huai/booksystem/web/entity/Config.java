@@ -14,6 +14,7 @@ public class Config {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Integer id;
+
     @Column(length = 50)
     private String webName;
 

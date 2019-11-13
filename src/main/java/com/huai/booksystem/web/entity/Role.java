@@ -1,6 +1,10 @@
 package com.huai.booksystem.web.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.huai.booksystem.unit.DatetimeUnit;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -18,7 +22,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "用户名不为空")
+    @NotEmpty(message = "用户名不为空")
     @Column(length = 30)
     private String name;
 
@@ -68,6 +72,7 @@ public class Role {
         this.orderNo = orderNo;
     }
 
+    @JsonSerialize(using = DatetimeUnit.class)
     public Date getCreatDateTime() {
         return creatDateTime;
     }
@@ -76,6 +81,7 @@ public class Role {
         this.creatDateTime = creatDateTime;
     }
 
+    @JsonSerialize(using = DatetimeUnit.class)
     public Date getUpdateDateTime() {
         return updateDateTime;
     }
