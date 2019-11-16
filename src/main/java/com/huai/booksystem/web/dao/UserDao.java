@@ -1,4 +1,4 @@
-package com.huai.booksystem.unit;
+package com.huai.booksystem.web.dao;
 
 import com.huai.booksystem.web.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

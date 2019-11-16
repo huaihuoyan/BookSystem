@@ -14,6 +14,7 @@ import javax.annotation.Resource;
  */
 @Service("configService")
 public class ConfigServiceImpl implements ConfigService {
+
     @Resource
     private ConfigDao configDao;
     @Override

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 主页
@@ -16,38 +17,38 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class IndexController {
 
+    /**
+     *# 请求首页
+     */
     @RequestMapping("/")
-    public ModelAndView index_1(){
-        ModelAndView mav  = new ModelAndView();
-        mav.setViewName("/pc/index");
-        return mav;
+    public String  index_1(HttpServletResponse res, HttpServletRequest req) throws Exception {
+        return "redirect:/login";
     }
 
+    /**
+     *   #请求首页  /index
+     */
     @RequestMapping("/index")
-    public ModelAndView index(){
-        ModelAndView mav  = new ModelAndView();
-        mav.setViewName("/pc/index");
-        return mav;
+    public String index(HttpServletResponse  res,HttpServletRequest req) throws Exception {
+        return "redirect:/login";
     }
 
-    @RequestMapping("/admin/main")
-    public ModelAndView admin_main(){
-        ModelAndView mav  = new ModelAndView();
-        mav.setViewName("/pc/index");
-        return mav;
-    }
 
+    /**
+     *    /login
+     *    #后台 用户电脑登陆
+     */
     @RequestMapping("/login")
-    public ModelAndView login(HttpServletRequest request){
-        ModelAndView mav  = new ModelAndView();
-       String UserAgent = request.getHeader("User-Agent");
-        if(BrowserveUnit.checkUserAger(UserAgent)){
-            mav.setViewName("/pc/login/login");
-        }else {
-            mav.setViewName("/common/s_mode");
-        }
+    public String login(){
+        return "/pc/login/login";
+    }
 
-        return mav;
+    /**
+     * # 后台主页
+     */
+    @RequestMapping("/admin/main")
+    public String admin_main(){
+        return "/admin/main";
     }
 
 

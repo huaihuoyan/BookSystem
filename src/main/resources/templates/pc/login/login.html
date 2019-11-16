@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
 <head>
     <meta charset="UTF-8">
-    <title th:text ="'|${application.config.webName}'"></title>
+    <!--<title th:text="${application.config.webName}+-登录页面"></title>-->
+    <title th:text ="${application.config.webName}"></title>
 </head>
 <!--添加 layui  支持加载-->
 <link rel="stylesheet" href="layui2.45/css/layui.css">
@@ -43,13 +45,13 @@
             return;
         }
 
-        $.post('/user/login', {
+        $.post('user/login', {
             name : name,
             password : password
         }, function(result) {
             if (result.success) {
                 layer.closeAll();
-                window.location.href = "/admin/main";
+                window.location.href = "admin/main";
             } else {
                 layer.closeAll();
                 layer.alert(result.msg);
