@@ -37,6 +37,7 @@ public class shiroconfig {
          */
         Map<String,String> filterMap = new LinkedHashMap<String,String>();
         filterMap.put("/login","anon");
+        filterMap.put("/static/**","anon");
 
         //authc需要 登陆才能访问
         filterMap.put("/admin/**", "authc");
