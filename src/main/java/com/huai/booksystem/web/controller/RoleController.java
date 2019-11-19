@@ -1,11 +1,8 @@
 package com.huai.booksystem.web.controller;
-
-import com.huai.booksystem.unit.CryptographyUtil;
-import com.huai.booksystem.web.dao.UserDao;
-import com.huai.booksystem.web.entity.User;
-import com.huai.booksystem.web.service.UserService;
+import com.huai.booksystem.web.dao.RoleDao;
+import com.huai.booksystem.web.entity.Role;
+import com.huai.booksystem.web.service.RoleService;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,21 +19,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Created by laiyunjing
- * @Date 2019/11/18 22:53
- * @Version
+ * @Author: laiyunjing
+ * @Date: 2019/11/19 0019 16:51
+ * @Version 1.0
  */
 @Controller
-@RequestMapping("/admin/user")
-public class AdminController {
+@RequestMapping("/admin/role")
+public class RoleController {
     @Autowired
-    private UserDao userDao;
+    private RoleDao roleDao;
     @Autowired
-    private UserService userService;
+    private RoleService roleService;
+
 
     @RequestMapping("/add")
     @ResponseBody
-    public JSONObject add(@Valid User user, BindingResult bindingResult, HttpServletRequest request , HttpServletResponse response){
+    public JSONObject add(@Valid Role role, BindingResult bindingResult, HttpServletRequest request , HttpServletResponse response){
         JSONObject jsonObject = new JSONObject();
 
         if(bindingResult.hasErrors()){
@@ -44,9 +42,8 @@ public class AdminController {
             jsonObject.put("msg",bindingResult.getFieldError().getDefaultMessage());
             return jsonObject;
         }else {
-            user.setCreatDateTime(new Date());
-            user.setPwd(CryptographyUtil.md5(user.getPwd(),"java"));
-            userDao.save(user);
+            role.setCreatDateTime(new Date());
+            roleDao.save(role);
             jsonObject.put("success",true);
             jsonObject.put("msg","添加成功");
             return jsonObject;
@@ -56,7 +53,7 @@ public class AdminController {
 
     @RequestMapping("/update")
     @ResponseBody
-    public JSONObject update(@Valid User user, BindingResult bindingResult, HttpServletRequest request){
+    public JSONObject update(@Valid Role role, BindingResult bindingResult, HttpServletRequest request){
         JSONObject jsonObject = new JSONObject();
 
         if(bindingResult.hasErrors()){
@@ -65,8 +62,8 @@ public class AdminController {
             return jsonObject;
         }else {
 
-            user.setUpdateDateTime(new Date());
-            userService.update(user);
+            role.setUpdateDateTime(new Date());
+            roleService.update(role);
             jsonObject.put("success",true);
             jsonObject.put("msg","添加成功");
             return jsonObject;
@@ -74,19 +71,6 @@ public class AdminController {
     }
 
 
-    @ResponseBody
-    @RequestMapping("/set_new_pwd")
-    public JSONObject set_new_pwd(User user)throws Exception {
-        JSONObject result = new JSONObject();
-        user.setUpdateDateTime(new Date());
-        if(StringUtils.isNotEmpty(user.getPwd())){
-            user.setPwd(CryptographyUtil.md5(user.getPwd(),"java"));
-        }
-        userService.update(user);
-        result.put("success", true);
-        result.put("msg", "修改成功");
-        return result;
-    }
 
 
 
@@ -98,8 +82,8 @@ public class AdminController {
                                     HttpServletRequest request) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        List<User> userList = userService.list(map, page-1, limit);
-        long total = userService.getTotal(map);
+        List<Role> userList = roleService.list(map, page-1, limit);
+        long total = roleService.getTotal(map);
         map.put("data", userList);
         map.put("count", total);
         map.put("code", 0);
@@ -115,7 +99,7 @@ public class AdminController {
         String[] idsStr = ids.split(",");
         JSONObject result = new JSONObject();
         for (int i = 0; i < idsStr.length; i++) {
-            userDao.deleteById(Integer.parseInt(idsStr[i]));
+            roleDao.deleteById(Integer.parseInt(idsStr[i]));
         }
         result.put("success", true);
         return result;

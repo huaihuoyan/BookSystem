@@ -21,7 +21,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer update(User user) {
-        return null;
+//        原数据
+        User origin = userDao.findId(user.getId());
+
+        user = repalce(user,origin);
+       userDao.save(user);
+        return 1;
     }
 
     @Override
