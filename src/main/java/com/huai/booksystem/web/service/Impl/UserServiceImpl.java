@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> list(Map<String, Object> map, Integer page, Integer pageSize) {
+    public List<User>  list(Map<String, Object> map, Integer page, Integer pageSize) {
         return null;
     }
 

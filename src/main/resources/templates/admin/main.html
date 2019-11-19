@@ -51,7 +51,7 @@
         add_flag = false;
         $(".layui-tab-title li").each(function(){
             var lay_id = $(this).attr("lay-id");
-            console.log(lay_id);
+            // console.log(lay_id);
             if(lay_id){
                 if(lay_id==id){
                     add_flag = true;
@@ -63,12 +63,12 @@
     function init_tab_height(){
         var body_width = document.body.offsetWidth;
         layui_tab_item_width = (body_width-left_width);
-        console.log("layui_tab_item的宽是:"+layui_tab_item_width);
+        // console.log("layui_tab_item的宽是:"+layui_tab_item_width);
         //计算layui-tab-item 需要 设置多少的高 顶部的60  layui-tab-title=41
         var body_height = document.body.offsetHeight;
         layui_tab_item_height = (body_height-60-41);
         $(".layui-tab-item").css("height",layui_tab_item_height+"px");
-        console.log("layui_tab_item的高是:"+layui_tab_item_height);
+        // console.log("layui_tab_item的高是:"+layui_tab_item_height);
     }
     function addTab(id,title,content){
         //遍历tab 看看这个id是否存在  如果存在直接切换
@@ -135,14 +135,16 @@
             var id = $(elem).attr("id");
             var url = $(elem).attr("url");
             var text = $(elem).attr("dd_text");
+            var type = $(elem).attr("type");
 
-            console.log(id);
-            console.log(url);
-            console.log(text);
-            // if(id){
-            //     var content = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='"+url+"'></iframe>";
-            //     addTab(id,text,content);
-            // }
+            // console.log(id);
+            // console.log(url);
+            // console.log(text);
+            // console.log(type)
+            if(id){
+                var content = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='"+url+"'></iframe>";
+                addTab(id,text,content);
+            }
             switch (type) {
                 case '0':
                     addTab(id,text,content);
