@@ -1,12 +1,17 @@
 package com.huai.booksystem.web.controller;
 
 import com.huai.booksystem.web.dao.UserDao;
+import com.huai.booksystem.web.entity.Role;
 import com.huai.booksystem.web.entity.User;
+import com.huai.booksystem.web.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Created by laiyunjing
@@ -19,7 +24,8 @@ public class HoutaiController {
 
     @Autowired
     private UserDao userDao;
-
+    @Autowired
+    private RoleService roleService;
 
 
     /**
@@ -30,7 +36,7 @@ public class HoutaiController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("pageTitle", "角色管理");
         mav.addObject("title", "角色管理");
-        mav.setViewName("/admin/page/user/role_manage");
+        mav.setViewName("/admin/page/user/user_manage");
         return mav;
     }
 
@@ -41,6 +47,10 @@ public class HoutaiController {
     @RequestMapping("/add")
     public ModelAndView add() throws Exception {
         ModelAndView mav = new ModelAndView();
+        Map<String, Object> map = null;
+        List<Role> roleList = roleService.list(map, 0, 1000);
+        mav.addObject("roleList", roleList);
+        mav.addObject("flag", true);
         mav.addObject("btn_text", "添加");
         mav.addObject("save_url", "/admin/role/add");
         mav.setViewName("/admin/page/user/add_update");
@@ -55,6 +65,9 @@ public class HoutaiController {
     @RequestMapping("/edit")
     public ModelAndView edit(@RequestParam(value = "id", required = false) Integer id) throws Exception {
         ModelAndView mav = new ModelAndView();
+        Map<String, Object> map = null;
+        List<Role> roleList = roleService.list(map, 0, 1000);
+        mav.addObject("roleList", roleList);
         User user = userDao.findId(id);
         mav.addObject("user", user);
         mav.addObject("btn_text", "修改");

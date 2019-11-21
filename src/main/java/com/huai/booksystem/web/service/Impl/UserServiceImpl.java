@@ -4,6 +4,10 @@ import com.huai.booksystem.web.dao.UserDao;
 import com.huai.booksystem.web.entity.User;
 import com.huai.booksystem.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,12 +35,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User>  list(Map<String, Object> map, Integer page, Integer pageSize) {
-        return null;
+        Pageable pageable = new PageRequest(page,pageSize, Sort.Direction.ASC,"orderNo");
+        Page<User> list = userDao.findAll(pageable);
+        return list.getContent();
     }
 
     @Override
     public Long getTotal(Map<String, Object> map) {
-        return null;
+
+        return userDao.count();
     }
 
     public User repalce(User curr,User origin){

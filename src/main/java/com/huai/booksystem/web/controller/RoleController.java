@@ -65,7 +65,7 @@ public class RoleController {
             role.setUpdateDateTime(new Date());
             roleService.update(role);
             jsonObject.put("success",true);
-            jsonObject.put("msg","添加成功");
+            jsonObject.put("msg","修改成功");
             return jsonObject;
         }
     }
@@ -99,7 +99,15 @@ public class RoleController {
         String[] idsStr = ids.split(",");
         JSONObject result = new JSONObject();
         for (int i = 0; i < idsStr.length; i++) {
-            roleDao.deleteById(Integer.parseInt(idsStr[i]));
+            try {
+                roleDao.deleteById(Integer.parseInt(idsStr[i]));
+            }catch (Exception e){
+                e.printStackTrace();
+                result.put("success", false);
+                result.put("msg","用户正在使用此角色");
+                return result;
+            }
+
         }
         result.put("success", true);
         return result;
