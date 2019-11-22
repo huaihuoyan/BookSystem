@@ -8,8 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +23,7 @@ import java.util.Map;
  * @Date: 2019/11/21 0021 17:20
  * @Version 1.0
  */
-@Service
+@Service("menuService")
 public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuDao menuDao;
@@ -40,13 +45,35 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<Menu> list(Map<String, Object> map, Integer page, Integer pageSize) {
         Pageable pageable = new PageRequest(page,pageSize, Sort.Direction.ASC,"orderNo");
-        Page<Menu> list = menuDao.findAll(pageable);
+        Page<Menu> list = menuDao.findAll(new Specification<Menu>() {
+            @Override
+            public Predicate toPredicate(Root<Menu> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+              Predicate predicate = criteriaBuilder.conjunction();
+               if(map.get("pId") != null){
+                    predicate.getExpressions().add(criteriaBuilder.equal(root.get("pId"),map.get("PId")));
+
+               }
+               return  predicate;
+            }
+        },pageable);
         return list.getContent();
     }
 
     @Override
     public Long getTotal(Map<String, Object> map) {
-        return menuDao.count();
+
+        Long count  = menuDao.count(new Specification<Menu>() {
+            @Override
+            public Predicate toPredicate(Root<Menu> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                Predicate predicate = criteriaBuilder.conjunction();
+                if(map.get("pId") != null){
+                    predicate.getExpressions().add(criteriaBuilder.equal(root.get("pId"),map.get("PId")));
+
+                }
+                return predicate;
+            }
+        });
+                return count;
     }
 
     @Override
