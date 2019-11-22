@@ -49,31 +49,31 @@
 <div style="padding: 10px;" class="layui-form layui-form-pane" action="">
 
     <div class="layui-form-item">
-        <label class="layui-form-label">角色名称</label>
+        <label class="layui-form-label">用户名称</label>
         <div class="layui-input-block">
-            <input type="text"  v-model="name" th:value="${role?.name}"  autocomplete="off"
-                   placeholder="请输入  角色名称" class="layui-input">
+            <input type="text"  v-model="name" th:value="${user?.name}"  autocomplete="off"
+                   placeholder="请输入  用户名称" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
+    <div th:if="${user == null}"class="layui-form-item">
         <label class="layui-form-label">密码</label>
         <div class="layui-input-block">
-            <input type="text"  v-model="name" th:value="${role?.name}"  autocomplete="off"
-                   placeholder="请输入  角色名称" class="layui-input">
+            <input type="text"  v-model="name" th:value="${user?.pwd}"  autocomplete="off"
+                   placeholder="请输入  密码" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">真实姓名</label>
         <div class="layui-input-block">
-            <input type="text"  v-model="name" th:value="${role?.name}"  autocomplete="off"
-                   placeholder="请输入  角色名称" class="layui-input">
+            <input type="text"  v-model="name" th:value="${user?.turename}"  autocomplete="off"
+                   placeholder="请输入  真实姓名" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">备注</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容"   v-model="remark"   class="layui-textarea" th:utext="${role?.remark}"></textarea>
+            <textarea placeholder="请输入内容"   v-model="remark"   class="layui-textarea" th:utext="${user?.remark}"></textarea>
         </div>
     </div>
 
@@ -81,7 +81,7 @@
         <label class="layui-form-label">角色</label>
         <div class="layui-input-block">
             <select id="roleId" name="interest" lay-filter="aihao">
-                <option th:value="${role.id}" th:text="${role.name}" th:each="${rolelist}"></option>
+                <option th:value="${role.id}" th:text="${role.name}" th:each=" role: ${roleList}"></option>
             </select>
         </div>
     </div>
