@@ -22,7 +22,7 @@ public interface MenuService {
 
     Menu findById(Integer id);
 
-    Integer delete(Integer id);
+    void delete(Integer id);
 
     List<Menu> findByPId(Integer pId);
 }

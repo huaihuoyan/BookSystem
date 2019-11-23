@@ -87,4 +87,29 @@ public class MenuController {
 
 
     }
+
+    @ResponseBody
+    @RequestMapping("/delete")
+    public JSONObject delete(@RequestParam(value = "ids", required = false) String ids) throws Exception {
+        String[] idsStr = ids.split(",");
+        JSONObject result = new JSONObject();
+        Map<String ,Object> map = new HashMap<String,Object>();
+        for(int i = 0;i<idsStr.length;i++){
+            try{
+                map.put("pId",Integer.parseInt(idsStr[i]));
+                List<Menu> menuList = menuService.list(map,0,100);
+                for(Menu menu : menuList){
+                    menuDao.deleteById(menu.getId());
+                }
+                menuDao.deleteById(Integer.parseInt(idsStr[i]));
+            }catch (Exception e){
+                e.printStackTrace();
+                result.put("success",false);
+                result.put("msg","角色正在使用");
+                return result;
+            }
+        }
+        result.put("success",true);
+        return result;
+    }
 }
