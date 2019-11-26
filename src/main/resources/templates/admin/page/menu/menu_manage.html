@@ -203,9 +203,13 @@
                 , element = layui.element; //元素操作
             table.render({
                 elem: '#table'
-                ,url: '/admin/menu/list?pId=[[${pId}]] '
+                ,url: '/admin/menu/list'
                 ,height: 'full-80'
-                ,totalRow: true
+                ,totalRow: true,
+                JSON:{
+                    pId:'[[${pId}]]'
+                }
+
                 ,cols: [[
                     {checkbox: true, fixed: true}
                     ,{field:'orderNo', title: '排序号', width:60,style:'font-size: 12px;' }
