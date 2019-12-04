@@ -241,6 +241,13 @@
                 }
             });
 
+            table.on('edit(table',function (obj) {
+                var value = obj.value;
+                var data = obj.data;
+                var filed = obj.field;
+                table_edit_update(data.id,filed,value);
+            })
+
         });
         /*]]>*/
     </script>

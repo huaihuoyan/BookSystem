@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 /**
  * @Created by laiyunjing
  * @Date 2019/11/18 22:43
@@ -14,4 +16,6 @@ public interface MenuDao extends JpaRepository<Menu,Integer>, JpaSpecificationEx
 
     @Query(value = "select * from T_MENU where id = ?1",nativeQuery = true)
     public Menu findId(Integer id);
+
+    List<Menu> findByPId(Integer pId);
 }

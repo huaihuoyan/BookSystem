@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/2005/Atom">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <div th:include="/common/layui"></div>
+    <div th:include="/common/jq"></div>
+</head>
+<script>
+    var tree ;
+    layui.use(['tree','laypage','layer','form','table','carousel','upload','element'],function () {
+        tree = layui.tree;
+
+        
+    })
+    function sub() {
+        var checkeDate = tree.getChecked('demoId');
+        var ids = "";
+        if(checkeDate.length> 0){
+            $.each(checkeDate,function (i,val) {
+                
+            })
+        }
+    }
+</script>
+<body>
+
+</body>
+</html>
