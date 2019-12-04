@@ -19,12 +19,49 @@
         var ids = "";
         if(checkeDate.length> 0){
             $.each(checkeDate,function (i,val) {
-                
+                ids = ids+val.id+",";
+                if(val.children){
+                    $.each(val.children,function (i,val) {
+                        ids = ids + val.id+",";
+                    })
+                }
             })
         }
+        ids = ids.substring(0,ids.length-1);
+        console.log(ids);
     }
 </script>
-<body>
-
+<body id="app">
+    <div id="tree" class="demo-tree-more"></div>
+<div>
+    <button onclick="sub()" type="button" class="layui-btn">提交</button>
+</div>
 </body>
+<script>
+    layui.use([ 'laydate', 'laypage', 'layer', 'table', 'carousel',
+        'upload', 'element' ], function() {
+        var laydate = layui.laydate //日期
+            , laypage = layui.laypage //分页
+            ,layer = layui.layer //弹层
+            , table = layui.table //表格
+            , carousel = layui.carousel //轮播
+            , upload = layui.upload //上传
+            , element = layui.element; //元素操作
+
+        $.post("/treeD",{roleId:[[${role.id}]]},function (result) {
+            tree.render({
+                elem:"#tree",
+                data:result,
+                showCheckbox:true,
+                id:"tree",
+                isJump:true,
+                click:function (obj) {
+                    var data = obj.data;
+                    console.log('状态'+obj.state+'<br>节点数据'+JSON.stringify(data));
+                }
+
+            })
+        },'json')
+    })
+</script>
 </html>

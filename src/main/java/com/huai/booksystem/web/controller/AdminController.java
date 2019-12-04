@@ -2,7 +2,11 @@ package com.huai.booksystem.web.controller;
 
 import com.huai.booksystem.unit.CryptographyUtil;
 import com.huai.booksystem.web.dao.UserDao;
+import com.huai.booksystem.web.entity.Menu;
+import com.huai.booksystem.web.entity.RoleMenu;
 import com.huai.booksystem.web.entity.User;
+import com.huai.booksystem.web.service.MenuService;
+import com.huai.booksystem.web.service.RoleMenuService;
 import com.huai.booksystem.web.service.UserService;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -16,10 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Created by laiyunjing
@@ -33,6 +34,10 @@ public class AdminController {
     private UserDao userDao;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MenuService menuService;
+    @Autowired
+    private RoleMenuService roleMenuService;
 
     @RequestMapping("/add")
     @ResponseBody
@@ -119,5 +124,19 @@ public class AdminController {
         }
         result.put("success", true);
         return result;
+    }
+    @ResponseBody
+    @RequestMapping("/getCheckTreeMenu")
+    public List<JSONObject> getCheckTreeMenu(@@RequestParam(value = "roleId",required = false) Integer roleId,
+                                             HttpServletResponse response)throws Exception{
+        List<JSONObject> list = new ArrayList<>();
+        List<Menu> menuList = menuService.findByPId(-1);
+        for(Menu menu:menuList){
+            JSONObject node = new JSONObject();
+            node.put("id",menu.getId());
+            node.put("text",menu.getName());
+            node.put("state","close");
+            RoleMenu roleMenu = roleMenuService.
+        }
     }
 }
