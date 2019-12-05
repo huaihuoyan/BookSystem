@@ -2,9 +2,12 @@ package com.huai.booksystem.web.service.Impl;
 
 import com.huai.booksystem.web.dao.MenuDao;
 import com.huai.booksystem.web.dao.RoleDao;
+import com.huai.booksystem.web.dao.RoleMenuDao;
 import com.huai.booksystem.web.entity.Role;
+import com.huai.booksystem.web.entity.RoleMenu;
 import com.huai.booksystem.web.service.RoleMenuService;
 import com.huai.booksystem.web.service.RoleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +33,7 @@ public class RoleServiceImpl implements RoleService {
     private MenuDao menuDao;
 
     @Autowired
-    private RoleMenuService roleMenuService;
+    private RoleMenuDao roleMenuDao;
 
 
     @Override
@@ -70,7 +74,21 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Integer updateMenu(Integer roleId, String menuIds) {
-        return null;
+        String[] idsStr = menuIds.split(",");
+        RoleMenu roleMenu;
+        roleMenuDao.deleteByRoleId(roleId);
+        for(int i=0;i<idsStr.length;i++){
+            if(StringUtils.isNotEmpty(idsStr[i])){
+                roleMenu = new RoleMenu();
+                roleMenu.setRole(roleDao.findId(roleId));
+                roleMenu.setMenu(menuDao.findId(Integer.parseInt(idsStr[i])));
+                roleMenuDao.save(roleMenu);
+            }
+        }
+        Role role = roleDao.findId(roleId);
+        role.setUpdateDateTime(new Date());
+        roleDao.save(role);
+        return 1;
     }
 
 

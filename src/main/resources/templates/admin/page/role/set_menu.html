@@ -28,6 +28,21 @@
             })
         }
         ids = ids.substring(0,ids.length-1);
+
+        var index  = layer.msg('提交中',{
+            icon:16,
+            time:false,
+            shade:0.8,
+        })
+        $.post('/admin/user/updateMenu', {roleId:[[${role.id}]],menuIds:ids
+        }, function(result) {
+            layer.closeAll();
+            if (result.success) {
+                window.parent.closeDlg(result.msg);
+            } else {
+                layer.msg(result.msg);
+            }
+        }, 'json');
         console.log(ids);
     }
 </script>

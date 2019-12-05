@@ -1,12 +1,14 @@
 package com.huai.booksystem.web.controller;
 
 import com.huai.booksystem.unit.CryptographyUtil;
+import com.huai.booksystem.web.dao.RoleMenuDao;
 import com.huai.booksystem.web.dao.UserDao;
 import com.huai.booksystem.web.entity.Menu;
 import com.huai.booksystem.web.entity.RoleMenu;
 import com.huai.booksystem.web.entity.User;
 import com.huai.booksystem.web.service.MenuService;
 import com.huai.booksystem.web.service.RoleMenuService;
+import com.huai.booksystem.web.service.RoleService;
 import com.huai.booksystem.web.service.UserService;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +40,10 @@ public class AdminController {
     private MenuService menuService;
     @Autowired
     private RoleMenuService roleMenuService;
+    @Autowired
+    private RoleMenuDao roleMenuDao;
+
+    private RoleService roleService;
 
     @RequestMapping("/add")
     @ResponseBody
@@ -127,7 +133,7 @@ public class AdminController {
     }
     @ResponseBody
     @RequestMapping("/getCheckTreeMenu")
-    public List<JSONObject> getCheckTreeMenu(@@RequestParam(value = "roleId",required = false) Integer roleId,
+    public List<JSONObject> getCheckTreeMenu(@RequestParam(value = "roleId",required = false) Integer roleId,
                                              HttpServletResponse response)throws Exception{
         List<JSONObject> list = new ArrayList<>();
         List<Menu> menuList = menuService.findByPId(-1);
@@ -136,7 +142,45 @@ public class AdminController {
             node.put("id",menu.getId());
             node.put("text",menu.getName());
             node.put("state","close");
-            RoleMenu roleMenu = roleMenuService.
+            RoleMenu roleMenu = roleMenuDao.findByRoleIdAndMenuId(roleId,menu.getId());
+            if(roleMenu == null){
+                node.put("checked",false);
+            }else{
+                node.put("checked",true);
+            }
+            node.put("children",getChildren(menu.getId(),roleId));
+            list.add(node);
         }
+        return list;
+    }
+
+    public  List<JSONObject>getChildren(Integer pId,Integer roleId)throws Exception{
+         List<Menu>menuList = menuService.findByPId(pId);
+         List<JSONObject> list = new ArrayList<JSONObject>();
+         for(Menu menu:menuList){
+             JSONObject node = new JSONObject();
+             node.put("id",menu.getId());
+             node.put("text",menu.getName());
+             node.put("state","opend");
+             RoleMenu roleMenu = roleMenuDao.findByRoleIdAndMenuId(roleId,menu.getId());
+             if(roleMenu == null){
+                 node.put("checked",false);
+             }else{
+                 node.put("checked",true);
+             }
+             list.add(node);
+         }
+         return list;
+    }
+
+    @ResponseBody
+    @RequestMapping("/updateMenu")
+    public  JSONObject updateMenu(@RequestParam(value = "roleId",required = false) Integer roleId,
+                                  @RequestParam(value = "menuIds",required = false) String menuIds){
+        JSONObject node = new JSONObject();
+        roleService.updateMenu(roleId,menuIds);
+        node.put("success",true);
+        node.put("msg","修改成功");
+        return node;
     }
 }

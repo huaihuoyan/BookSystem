@@ -1,12 +1,21 @@
 package com.huai.booksystem.web.controller;
 
 import com.huai.booksystem.unit.BrowserveUnit;
+import com.huai.booksystem.web.dao.MenuDao;
+import com.huai.booksystem.web.entity.Menu;
+import com.huai.booksystem.web.entity.User;
+import net.sf.json.JSONObject;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Security;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 主页
@@ -16,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 public class IndexController {
+    @Autowired
+    private MenuDao menuDao;
 
     /**
      *# 请求首页
@@ -49,6 +60,34 @@ public class IndexController {
     @RequestMapping("/admin/main")
     public String admin_main(){
         return "/admin/main";
+    }
+
+
+    public List<JSONObject> trrD (HttpServletRequest request,HttpServletResponse response){
+        User currentUser = (User) SecurityUtils.getSubject().getSession().getAttribute("currentUser");
+        List<JSONObject> list = new ArrayList<JSONObject>();
+
+        List<Menu> menuList = menuDao.findByPId(-1);
+        for(Menu menu:menuList){
+            JSONObject node = new JSONObject();
+            node.put("id",menu.getId());
+            node .put("title",menu.getName());
+            node.put("spread",true);
+            node.put("children",getChildren(menu.getId(),currentUser.getRole().getId()));
+        }
+        return list;
+    }
+
+    public List<JSONObject> getChildren(Integer pId,Integer roleId){
+        List<Menu> menuList = menuDao.findByPId(pId);
+        List<JSONObject> list = new ArrayList<JSONObject>();
+        for(Menu menu:menuList){
+            JSONObject node = new JSONObject();
+            node.put("id",menu.getId());
+            node.put("text",menu.getName());
+            list.add(node);
+        }
+        return list;
     }
 
 
