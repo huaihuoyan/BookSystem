@@ -1,8 +1,8 @@
 
 function checkWindow() {
 
-    console.log(document.body.offsetHeight);//文档高度
-    console.log($(window).height());//窗口高度
+    // console.log(document.body.offsetHeight);//文档高度
+    // console.log($(window).height());//窗口高度
 
     if(h > $(window).height()){
         h = (document.body.offsetHeight - 50);

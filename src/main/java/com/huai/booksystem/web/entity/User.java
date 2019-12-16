@@ -33,7 +33,7 @@ public class User {
     @Column(length = 200)
     private String pwd;
 
-    @NotEmpty(message = "用户名不为空")
+    @NotEmpty(message = "真名不为空")
     @Column(length = 200)
     private String turename;
 

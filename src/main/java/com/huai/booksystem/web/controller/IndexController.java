@@ -67,7 +67,7 @@ public class IndexController {
         User currentUser = (User) SecurityUtils.getSubject().getSession().getAttribute("currentUser");
         List<JSONObject> list = new ArrayList<JSONObject>();
 
-        List<Menu> menuList = menuDao.findByPId(-1);
+        List<Menu> menuList = menuDao.findByPid(-1);
         for(Menu menu:menuList){
             JSONObject node = new JSONObject();
             node.put("id",menu.getId());
@@ -79,7 +79,7 @@ public class IndexController {
     }
 
     public List<JSONObject> getChildren(Integer pId,Integer roleId){
-        List<Menu> menuList = menuDao.findByPId(pId);
+        List<Menu> menuList = menuDao.findByPid(pId);
         List<JSONObject> list = new ArrayList<JSONObject>();
         for(Menu menu:menuList){
             JSONObject node = new JSONObject();

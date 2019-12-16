@@ -26,6 +26,7 @@
     })
     /*<![CDATA[*/
     var save_url = [[${save_url}]];
+    // console.log(save_url);
     function save() {
         var index = layer.msg('提交中，请稍候', {
             icon : 16,
@@ -89,7 +90,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">排序号</label>
         <div class="layui-input-block">
-            <input type="text"  v-model="orderNo" th:value="${role?.orderNo}"  autocomplete="off"
+            <input type="text"  v-model="orderNo" th:value="${user?.orderNo}"  autocomplete="off"
                    placeholder="请输入  排序号" class="layui-input">
         </div>
     </div>

@@ -42,7 +42,7 @@ public class HoutaiController {
 
 
     /**
-     * /houtai/role/add
+     * /houtai/user/add
      */
     @RequestMapping("/add")
     public ModelAndView add() throws Exception {
@@ -52,7 +52,7 @@ public class HoutaiController {
         mav.addObject("roleList", roleList);
         mav.addObject("flag", true);
         mav.addObject("btn_text", "添加");
-        mav.addObject("save_url", "/admin/role/add");
+        mav.addObject("save_url", "/admin/user/add");
         mav.setViewName("/admin/page/user/add_update");
         return mav;
     }
@@ -71,7 +71,7 @@ public class HoutaiController {
         User user = userDao.findId(id);
         mav.addObject("user", user);
         mav.addObject("btn_text", "修改");
-        mav.addObject("save_url", "/admin/role/update?id=" + id);
+        mav.addObject("save_url", "/admin/user/update?id=" + id);
         mav.setViewName("/admin/page/user/add_update");
         return mav;
     }

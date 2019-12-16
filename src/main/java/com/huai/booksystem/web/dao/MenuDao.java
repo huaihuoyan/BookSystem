@@ -17,5 +17,5 @@ public interface MenuDao extends JpaRepository<Menu,Integer>, JpaSpecificationEx
     @Query(value = "select * from T_MENU where id = ?1",nativeQuery = true)
     public Menu findId(Integer id);
 
-    List<Menu> findByPId(Integer pId);
+    List<Menu> findByPid(Integer pId);
 }
