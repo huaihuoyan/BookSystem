@@ -38,7 +38,7 @@
 
         var type = $("#type").val();
         var state = $("#state").val();
-        $.post(save_url, {pId:[[${pId}]],name:app.name,url:app.url,orderNo:app.orderNo,state:state,type:type,icon:app.icon,permission:app.permisson
+        $.post(save_url, {pId:[[${pId}]],name:app.name,url:app.url,orderNo:app.orderNo,state:state,type:type,icon:app.icon,perssion:app.perssion,divId:app.divId
         }, function(result) {
             if (result.success) {
                 window.parent.closeDlg(result.msg);
@@ -83,14 +83,14 @@
         <label class="layui-form-label">图标</label>
         <div class="layui-input-block">
             <input type="text"  v-model="icon" th:value="${menu?.icon}"  autocomplete="off"
-                   placeholder="请输入  菜单名称" class="layui-input">
+                   placeholder="请输入  图标" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">权限名称</label>
         <div class="layui-input-block">
-            <input type="text"  v-model="permission" th:value="${menu?.permission}"  autocomplete="off"
+            <input type="text"  v-model="perssion" th:value="${menu?.perssion}"  autocomplete="off"
                    placeholder="请输入  权限名称" class="layui-input">
         </div>
     </div>
@@ -110,7 +110,7 @@
         <label class="layui-form-label">layui,id</label>
         <div class="layui-input-block">
             <input type="text"  v-model="divId" th:value="${menu?.divId}"  autocomplete="off"
-                   placeholder="请输入  权限名称" class="layui-input">
+                   placeholder="" class="layui-input">
         </div>
     </div>
 
@@ -124,7 +124,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">排序号</label>
         <div class="layui-input-block">
-            <input type="text"  v-model="orderNo" th:value="${role?.orderNo}"  autocomplete="off"
+            <input type="text"  v-model="orderNo" th:value="${menu?.orderNo}"  autocomplete="off"
                    placeholder="请输入  排序号" class="layui-input">
         </div>
     </div>

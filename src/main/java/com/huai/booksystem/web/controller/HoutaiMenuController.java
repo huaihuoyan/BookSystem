@@ -51,7 +51,7 @@ public class HoutaiMenuController {
         Menu menu = menuDao.findId(id);
         mav.addObject("menu", menu);
         mav.addObject("btn_text", "修改");
-        mav.addObject("pId",menu.getPid());
+        mav.addObject("pId",menu.getpId());
         mav.addObject("save_url", "/admin/menu/update?id=" + id);
         mav.setViewName("/admin/page/menu/add_update");
         return mav;

@@ -17,7 +17,7 @@ public class Menu {
     private Integer id;
 
     @Column(length = 10)
-    private Integer pid;
+    private Integer pId;
 
     @Column(length =50)
     private String name;
@@ -52,12 +52,12 @@ public class Menu {
         this.id = id;
     }
 
-    public Integer getPid() {
-        return pid;
+    public Integer getpId() {
+        return pId;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setpId(Integer pId) {
+        this.pId = pId;
     }
 
     public String getName() {

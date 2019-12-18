@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/2005/Atom">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="UTF-8">
         <title th:text="${title}"></title>
@@ -48,7 +48,7 @@
                 shadeClose: false,
                 shade: 0.8,
                 area: [w+'px', h+'px'],
-                content: '/houtai/menu/add?pId=+[[${pId}]]'//iframe的url
+                content: '/houtai/menu/add?pId=[[${pId}]]'//iframe的url
             });
         }
         //打开编辑窗口
@@ -128,7 +128,7 @@
         
         function manage(id) {
             w = 800;
-            h = 900;
+            h = 700;
             layer.open({
                 type: 2,
                 title: '管理子菜单',
@@ -190,7 +190,13 @@
         {{#  }  }}
     </script>
 
-    <script th:inline="none">
+    <script >
+
+
+        // var username = [${pId}];
+        // console.log(username);
+
+
         /*<![CDATA[*/
         layui.use([ 'laydate', 'laypage', 'layer', 'table', 'carousel',
             'upload', 'element' ], function() {
@@ -201,16 +207,15 @@
                 , carousel = layui.carousel //轮播
                 , upload = layui.upload //上传
                 , element = layui.element; //元素操作
+
+
+
             table.render({
                 elem: '#table'
-                ,url: '/admin/menu/list'
-                ,height: 'full-80'
-                ,totalRow: true,
-                JSON:{
-                    pId:'[[${pId}]]'
-                }
-
-                ,cols: [[
+                ,url: '/admin/menu/list?pId=[[${pId}]]'
+                ,height: 'full-60'
+                ,totalRow: true
+                ,cols: [ [
                     {checkbox: true, fixed: true}
                     ,{field:'orderNo', title: '排序号', width:60,style:'font-size: 12px;' }
                     ,{field:'name', title: '菜单名称', width:90,style:'font-size: 12px;' }
@@ -220,10 +225,8 @@
                     ,{field:'perssion', title: '权限', width:90,style:'font-size: 12px;' }
                     ,{field:'type', title: '打开方式', width:90,style:'font-size: 12px;' ,templet:'#format_type'}
                     ,{field:'divId', title: 'layuiTable', width:100 ,style:'font-size: 12px;'}
-
                     ,{fixed:'right', width:120,title: '操作',  toolbar: '#table_bar'}
-
-                ]]
+                ] ]
                 ,id: 'table'
                 ,page: true
                 ,limits:[500,1000,2000,3000],

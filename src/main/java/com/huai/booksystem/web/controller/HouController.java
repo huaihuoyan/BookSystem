@@ -35,8 +35,8 @@ public class HouController {
     @RequestMapping("/manage")
     public ModelAndView manage() throws Exception {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("pageTitle", "用户管理");
-        mav.addObject("title", "用户管理");
+        mav.addObject("pageTitle", "角色管理");
+        mav.addObject("title", "角色管理");
         mav.setViewName("/admin/page/role/role_manage");
         return mav;
     }

@@ -50,7 +50,7 @@ public class MenuServiceImpl implements MenuService {
             public Predicate toPredicate(Root<Menu> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
               Predicate predicate = criteriaBuilder.conjunction();
                if(map.get("pId") != null){
-                    predicate.getExpressions().add(criteriaBuilder.equal(root.get("pId"),map.get("PId")));
+                    predicate.getExpressions().add(criteriaBuilder.equal(root.get("pId"),map.get("pId")));
 
                }
                return  predicate;
@@ -67,7 +67,7 @@ public class MenuServiceImpl implements MenuService {
             public Predicate toPredicate(Root<Menu> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 Predicate predicate = criteriaBuilder.conjunction();
                 if(map.get("pId") != null){
-                    predicate.getExpressions().add(criteriaBuilder.equal(root.get("pId"),map.get("PId")));
+                    predicate.getExpressions().add(criteriaBuilder.equal(root.get("pId"),map.get("pId")));
 
                 }
                 return predicate;
@@ -88,7 +88,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<Menu> findByPId(Integer pId) {
-        return menuDao.findByPid(pId);
+        return menuDao.findBypId(pId);
     }
 
 
@@ -98,8 +98,8 @@ public class MenuServiceImpl implements MenuService {
         }
 
 
-        if(curr.getPid() == null){
-            curr.setPid(origin.getPid());
+        if(curr.getpId() == null){
+            curr.setpId(origin.getpId());
         }
 
         if(curr.getUrl() == null){
