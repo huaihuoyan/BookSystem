@@ -139,7 +139,10 @@ public class AdminController {
     public List<JSONObject> getCheckTreeMenu(@RequestParam(value = "roleId",required = false) Integer roleId,
                                              HttpServletResponse response)throws Exception{
         List<JSONObject> list = new ArrayList<>();
-        List<Menu> menuList = menuDao.findBypId(-1);
+//        List<Menu> menuList = menuDao.findBypId(-1);
+        Map<String, Object> map = new HashMap<String, Object>() ;
+        map.put("pId",-1);
+        List<Menu> menuList = menuService.list(map,0,100);
         for(Menu menu:menuList){
             JSONObject node = new JSONObject();
             node.put("id",menu.getId());
@@ -158,19 +161,25 @@ public class AdminController {
     }
 
     public  List<JSONObject>getChildren(Integer pId,Integer roleId)throws Exception{
-         List<Menu>menuList = menuDao.findBypId(pId);
+
+        Map<String, Object> map = new HashMap<String, Object>() ;
+        map.put("pId",pId);
+        List<Menu> menuList = menuService.list(map,0,100);
+
+//         List<Menu>menuList = menuDao.findBypId(pId);
          List<JSONObject> list = new ArrayList<JSONObject>();
          for(Menu menu:menuList){
              JSONObject node = new JSONObject();
              node.put("id",menu.getId());
              node.put("title",menu.getName());
-//             node.put("state","opend");
-//             RoleMenu roleMenu = roleMenuDao.findByRoleIdAndMenuId(roleId,menu.getId());
-//             if(roleMenu == null){
-//                 node.put("checked",false);
-//             }else{
-//                 node.put("checked",true);
-//             }
+
+                 node.put("state","opend");
+                 RoleMenu roleMenu = roleMenuDao.findByRoleIdAndMenuId(roleId,menu.getId());
+                 if(roleMenu == null){
+                     node.put("checked",false);
+                 }else{
+                     node.put("checked",true);
+                 }
              list.add(node);
          }
          return list;
