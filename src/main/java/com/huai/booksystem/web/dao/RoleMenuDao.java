@@ -1,11 +1,15 @@
 package com.huai.booksystem.web.dao;
 
+import com.huai.booksystem.web.entity.Menu;
+import com.huai.booksystem.web.entity.Role;
 import com.huai.booksystem.web.entity.RoleMenu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @Created by laiyunjing
@@ -24,6 +28,8 @@ public interface RoleMenuDao extends JpaRepository<RoleMenu,Integer>, JpaSpecifi
     @Modifying
     @Query(value = "delete  from T_ROLE_MENU where role_id = ?1",nativeQuery = true)
     Integer deleteByRoleId(Integer roleId);
+
+    List<RoleMenu>findByRole(Role role);
 
 
 }

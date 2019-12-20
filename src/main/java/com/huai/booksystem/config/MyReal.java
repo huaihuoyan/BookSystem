@@ -1,6 +1,8 @@
 package com.huai.booksystem.config;
 
+import com.huai.booksystem.web.dao.RoleMenuDao;
 import com.huai.booksystem.web.dao.UserDao;
+import com.huai.booksystem.web.entity.RoleMenu;
 import com.huai.booksystem.web.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -25,6 +27,8 @@ public class MyReal extends AuthorizingRealm {
 
     @Autowired
     private UserDao userService;
+    @Autowired
+    private RoleMenuDao roleMenuDao;
 
     /**
      * 授权--验证url

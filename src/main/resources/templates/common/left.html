@@ -1,23 +1,18 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.w3.org/2005/Atom">
+<meta charset="UTF-8">
+
 <div class="layui-side layui-bg-black" id="left_menu" style="top: 60px; ">
     <div class="layui-side-scroll">
         <ul class="layui-nav layui-nav-tree" lay-filter="left_menu">
-            <li class="layui-nav-item layui-nav-itemed"  th:each="node :${list}"  >
+            <li class="layui-nav-item layui-nav-itemed"  th:each="node :  ${treeList}"  >
                 <a href="javascript:;" th:text="${node.text}" ></a>
-                <dl class="layui-nav-child" th:each="item:${node:children}" >
+                <dl class="layui-nav-child" th:each="item:  ${node.children}" >
                     <dd  th:dd_text="${item.text}"  th:type="${item.type}"  th:url="${item.url}"  th:id="${item.divId}" >
-                        <a href="#"><i  class="layui-icon" th:utext="${item.icon}">&nbsp;[[${item.text}]]</i></a>
+                        <a href="#"><i  class="layui-icon" th:utext="${item.icon}"></i>&nbsp;[[${item.text}]]</a>
                     </dd>
                 </dl>
             </li>
         </ul>
     </div>
 </div>
-</body>
 </html>

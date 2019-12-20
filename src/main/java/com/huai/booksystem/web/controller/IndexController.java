@@ -66,15 +66,15 @@ public class IndexController {
     /**
      * # 后台主页
      */
-    @RequestMapping("/admin/main")
+//    @RequestMapping("/admin/main")
     public String admin_main(){
         return "/admin/main";
     }
 
-
+    @RequestMapping("/admin/main")
     public ModelAndView andmin(HttpServletRequest request,HttpServletResponse response) throws Exception{
             ModelAndView mav = new ModelAndView();
-            String UserAgent = request.getHeader("User_Agent");
+            String UserAgent = request.getHeader("user-agent");
             if(BrowserveUnit.checkUserAger(UserAgent)){
                 mav.setViewName("/admin/main");
             }else {
@@ -101,6 +101,7 @@ public class IndexController {
                 node.put("icon",menu.getIcon());
                 node.put("divId",menu.getDivId());
                 node.put("children",getChildren(menu.getId(),user.getRole().getId()));
+                list.add(node);
             }
         }
         mav.addObject("treeList",list);
