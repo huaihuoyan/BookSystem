@@ -2,6 +2,7 @@ package com.huai.booksystem.config;
 
 import com.huai.booksystem.web.dao.RoleMenuDao;
 import com.huai.booksystem.web.dao.UserDao;
+import com.huai.booksystem.web.entity.Menu;
 import com.huai.booksystem.web.entity.RoleMenu;
 import com.huai.booksystem.web.entity.User;
 import org.apache.shiro.SecurityUtils;
@@ -16,6 +17,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,9 +39,15 @@ public class MyReal extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String name=(String) SecurityUtils.getSubject().getPrincipal();
         User user=userService.findByName(name);
+        List<RoleMenu> roleMenus = roleMenuDao.findByRole(user.getRole());
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
+        for(RoleMenu roleMenu :roleMenus){
+            info.addStringPermission(roleMenu.getMenu().getPerssion());//添加权限
+        }
+
         Set<String> roles=new HashSet<String>();
-        roles.add("超级管理员");
+        roles.add(user.getRole().getName());
+
 		/*List<Role> roleList=roleRepository.findByUserId(user.getId());
 		Set<String> roles=new HashSet<String>();
 		for(Role role:roleList){
@@ -50,7 +58,7 @@ public class MyReal extends AuthorizingRealm {
 			}
 		}
 		*/
-        info.addStringPermission("添加用户权限");//添加权限
+
         info.setRoles(roles);
         return info;
     }
